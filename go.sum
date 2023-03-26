@@ -1,0 +1,6 @@
+github.com/warthog618/gpiod v0.8.1 h1:+8iHpHd3fljAd6l4AT8jPbMDQNKdvBIpW/hmLgAcHiM=
+github.com/warthog618/gpiod v0.8.1/go.mod h1:A7v1hGR2eTsnkN+e9RoAPYgJG9bLJWtwyIIK+pgqC7s=
+golang.org/x/sync v0.1.0 h1:wsuoTGHzEhffawBOhz5CYhcrV4IdKZbEyZjBMuTp12o=
+golang.org/x/sync v0.1.0/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sys v0.3.0 h1:w8ZOecv6NaNa/zC8944JTU3vz4u6Lagfk4RPQxv92NQ=
+golang.org/x/sys v0.3.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
