@@ -29,9 +29,9 @@ func NewButton(chip *gpiod.Chip, dataPint int) *Button {
 func (b *Button) Run(ctx context.Context, actions chan<- Action) error {
 	handler := func(event gpiod.LineEvent) {
 		if event.Type == gpiod.LineEventRisingEdge {
-			actions <- Press
-		} else {
 			actions <- Release
+		} else {
+			actions <- Press
 		}
 	}
 
