@@ -27,15 +27,28 @@ func NewButton(chip *gpiod.Chip, dataPint int) *Button {
 }
 
 func (b *Button) Run(ctx context.Context, actions chan<- Action) error {
+	var line *gpiod.Line
+
+	previousValue := 1
+
 	handler := func(event gpiod.LineEvent) {
-		if event.Type == gpiod.LineEventRisingEdge {
-			actions <- Release
-		} else {
-			actions <- Press
+		value, err := line.Value()
+		if err != nil {
+			panic(err)
+		}
+
+		if value != previousValue {
+			if value == 1 {
+				actions <- Release
+			} else {
+				actions <- Press
+			}
+
+			previousValue = value
 		}
 	}
 
-	line, err := b.chip.RequestLine(b.dataPin, gpiod.AsInput, gpiod.WithBothEdges, gpiod.WithEventHandler(handler))
+	line, err := b.chip.RequestLine(b.dataPin, gpiod.AsInput, gpiod.WithPullUp, gpiod.WithBothEdges, gpiod.WithEventHandler(handler))
 	if err != nil {
 		return fmt.Errorf("request data line: %w", err)
 	}
