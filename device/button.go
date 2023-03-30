@@ -62,7 +62,9 @@ func (t *Button) Run(ctx context.Context, actions chan<- Action) error {
 
 	line, err := t.chip.RequestLine(t.dataPin, gpiod.AsInput, gpiod.WithPullUp, gpiod.WithBothEdges, gpiod.WithEventHandler(handler))
 	if err != nil {
-		t.logger.WithError(err).WithField("data_pin", t.dataPin).Error("request line failed")
+		lineInfo, _ := t.chip.LineInfo(t.dataPin)
+
+		t.logger.WithError(err).WithField("dataPin", t.dataPin).WithField("dataLineInfo", lineInfo).Error("request line failed")
 		return fmt.Errorf("request line: %w", err)
 	}
 
