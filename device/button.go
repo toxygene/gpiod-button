@@ -43,11 +43,11 @@ func (t *Button) Run(ctx context.Context, actions chan<- Action) error {
 
 		value, err := line.Value()
 		if err != nil {
-			t.logger.WithError(err).Error("read line value failed")
+			t.logger.WithError(err).Error("read button line value failed")
 			panic(err)
 		}
 
-		t.logger.WithField("line", line).WithField("previousValue", previousValue).WithField("value", value).Trace("read line value")
+		t.logger.WithField("line", line).WithField("previousValue", previousValue).WithField("value", value).Trace("read button line value")
 
 		if value != previousValue {
 			if value == 1 {
@@ -64,8 +64,8 @@ func (t *Button) Run(ctx context.Context, actions chan<- Action) error {
 	if err != nil {
 		lineInfo, _ := t.chip.LineInfo(t.dataPin)
 
-		t.logger.WithError(err).WithField("dataPin", t.dataPin).WithField("dataLineInfo", lineInfo).Error("request line failed")
-		return fmt.Errorf("request line: %w", err)
+		t.logger.WithError(err).WithField("dataPin", t.dataPin).WithField("dataLineInfo", lineInfo).Error("request button line failed")
+		return fmt.Errorf("request button line: %w", err)
 	}
 
 	defer line.Close()
