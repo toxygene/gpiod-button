@@ -6,6 +6,7 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/warthog618/gpiod"
+	"github.com/warthog618/gpiod/device/rpi"
 )
 
 type Action string
@@ -21,12 +22,25 @@ type Button struct {
 	logger  *logrus.Entry
 }
 
-func NewButton(chip *gpiod.Chip, dataPint int, logger *logrus.Entry) *Button {
+func NewButton(chip *gpiod.Chip, dataPin int, logger *logrus.Entry) *Button {
 	return &Button{
 		chip:    chip,
-		dataPin: dataPint,
+		dataPin: dataPin,
 		logger:  logger,
 	}
+}
+
+func NewButtonFromPinName(chip *gpiod.Chip, dataPin string, logger *logrus.Entry) (*Button, error) {
+	pin, err := rpi.Pin(dataPin)
+	if err != nil {
+		return nil, fmt.Errorf("translate pin name: %w", err)
+	}
+
+	return &Button{
+		chip:    chip,
+		dataPin: pin,
+		logger:  logger,
+	}, nil
 }
 
 func (t *Button) Run(ctx context.Context, actions chan<- Action) error {
